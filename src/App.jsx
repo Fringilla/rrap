@@ -17,7 +17,9 @@ const recipeItems = data.hits.map((hit, index) => {
 });
 
 export const App = () => {
-    const [selectedRecipe, setSelectedRecipe] = useState(null);
+    const [selectedRecipe, setSelectedRecipe] = useState(null, () => {
+        window.scrollTo(0, 0);
+    });
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const { colorMode } = useColorMode();
     const themeColors = recipeColorThemes[colorMode === 'dark' ? 'dark' : 'light'];
