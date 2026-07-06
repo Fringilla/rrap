@@ -9,10 +9,14 @@ import {
     Stack,
     Text,
 } from '@chakra-ui/react';
+import { useColorMode } from '../components/ui/color-mode';
+import { recipeColorThemes } from '../components/ui/theme-tokens';
 
 export const RecipeListPage = ({ recipes, onSelectRecipe }) => {
     const [search, setSearch] = useState('');
     const [activeFilters, setActiveFilters] = useState([]);
+    const { colorMode } = useColorMode();
+    const themeColors = recipeColorThemes[colorMode === 'dark' ? 'dark' : 'light'];
 
     const toggleFilter = (value, kind) => {
         setActiveFilters((current) => {
@@ -82,8 +86,8 @@ export const RecipeListPage = ({ recipes, onSelectRecipe }) => {
     });
 
     return (
-        <Box minH="100vh" px={{ base: 4, md: 8 }} py={8} bg="gray.50">
-            <Heading as="h1" size="lg" mb={4} textAlign="center" color="teal.600">
+        <Box minH="100vh" px={{ base: 4, md: 8 }} py={8} bg={themeColors.pageBg}>
+            <Heading as="h1" size="lg" mb={4} textAlign="center" color={themeColors.heading}>
                 React Recipe App Project
             </Heading>
 
@@ -92,10 +96,10 @@ export const RecipeListPage = ({ recipes, onSelectRecipe }) => {
                     placeholder="Search recipes"
                     value={search}
                     onChange={(event) => setSearch(event.target.value)}
-                    bg="white"
-                    color="gray.900"
-                    borderColor="gray.200"
-                    _placeholder={{ color: 'gray.400' }}
+                    bg={themeColors.inputBg}
+                    color={themeColors.pageText}
+                    borderColor={themeColors.inputBorder}
+                    _placeholder={{ color: themeColors.inputPlaceholder }}
                 />
             </Box>
 
@@ -112,10 +116,10 @@ export const RecipeListPage = ({ recipes, onSelectRecipe }) => {
                             return (
                                 <Badge
                                     key={`${filter.kind}-${filter.value}`}
-                                    bg={isDietaryFilter ? 'purple.100' : isCautionFilter ? 'red.50' : isDishTypeFilter ? 'gray.100' : 'teal.50'}
-                                    color={isDietaryFilter ? 'purple.900' : isCautionFilter ? 'red.700' : isDishTypeFilter ? 'gray.800' : 'teal.700'}
+                                    bg={isDietaryFilter ? themeColors.dietaryBg : isCautionFilter ? themeColors.cautionBg : isDishTypeFilter ? themeColors.dishBg : themeColors.mealBg}
+                                    color={isDietaryFilter ? themeColors.dietaryText : isCautionFilter ? themeColors.cautionText : isDishTypeFilter ? themeColors.dishText : themeColors.mealText}
                                     border="1px solid"
-                                    borderColor={isDietaryFilter ? 'purple.300' : isCautionFilter ? 'red.200' : isDishTypeFilter ? 'gray.300' : 'teal.200'}
+                                    borderColor={isDietaryFilter ? themeColors.dietaryBorder : isCautionFilter ? themeColors.cautionBorder : isDishTypeFilter ? themeColors.dishBorder : themeColors.mealBorder}
                                     cursor="pointer"
                                     onClick={() => toggleFilter(filter.value, filter.kind)}
                                 >
@@ -138,10 +142,10 @@ export const RecipeListPage = ({ recipes, onSelectRecipe }) => {
                                 onClick={() => onSelectRecipe(recipe)}
                                 borderWidth="1px"
                                 borderRadius="xl"
-                                borderColor="gray.200"
+                                borderColor={themeColors.surfaceBorder}
                                 m={2}
                                 overflow="hidden"
-                                bg="white"
+                                bg={themeColors.surface}
                                 boxShadow="md"
                                 cursor="pointer"
                                 transition="transform 0.2s, box-shadow 0.2s"
@@ -152,10 +156,10 @@ export const RecipeListPage = ({ recipes, onSelectRecipe }) => {
                                 <Stack spacing={3} p={5}>
                                     <Stack direction="row" wrap="wrap">
                                         <Badge
-                                            bg="teal.50"
-                                            color="teal.700"
+                                            bg={themeColors.mealBg}
+                                            color={themeColors.mealText}
                                             border="1px solid"
-                                            borderColor="teal.200"
+                                            borderColor={themeColors.mealBorder}
                                             cursor="pointer"
                                             onClick={(event) => {
                                                 event.stopPropagation();
@@ -169,10 +173,10 @@ export const RecipeListPage = ({ recipes, onSelectRecipe }) => {
                                         </Badge>
                                         {isVegan && (
                                             <Badge
-                                                bg="purple.100"
-                                                color="purple.900"
+                                                bg={themeColors.dietaryBg}
+                                                color={themeColors.dietaryText}
                                                 border="1px solid"
-                                                borderColor="purple.300"
+                                                borderColor={themeColors.dietaryBorder}
                                                 cursor="pointer"
                                                 onClick={(event) => {
                                                     event.stopPropagation();
@@ -184,10 +188,10 @@ export const RecipeListPage = ({ recipes, onSelectRecipe }) => {
                                         )}
                                         {isVegetarian && !isVegan && (
                                             <Badge
-                                                bg="purple.100"
-                                                color="purple.900"
+                                                bg={themeColors.dietaryBg}
+                                                color={themeColors.dietaryText}
                                                 border="1px solid"
-                                                borderColor="purple.300"
+                                                borderColor={themeColors.dietaryBorder}
                                                 cursor="pointer"
                                                 onClick={(event) => {
                                                     event.stopPropagation();
@@ -199,8 +203,8 @@ export const RecipeListPage = ({ recipes, onSelectRecipe }) => {
                                         )}
                                         {!isVegan && !isVegetarian && (
                                             <Badge
-                                                bg="gray.100"
-                                                color="gray.700"
+                                                bg={themeColors.notVeganBg}
+                                                color={themeColors.notVeganText}
                                                 cursor="pointer"
                                                 onClick={(event) => {
                                                     event.stopPropagation();
@@ -216,14 +220,14 @@ export const RecipeListPage = ({ recipes, onSelectRecipe }) => {
                                         {recipe.label}
                                     </Heading>
 
-                                    <Text color="gray.600">
+                                    <Text color={themeColors.mutedText}>
                                         <strong>Dish type:</strong>{' '}
                                         <Box
                                             as="span"
-                                            bg="gray.100"
-                                            color="gray.800"
+                                            bg={themeColors.dishBg}
+                                            color={themeColors.dishText}
                                             border="1px solid"
-                                            borderColor="gray.300"
+                                            borderColor={themeColors.dishBorder}
                                             borderRadius="md"
                                             px={2}
                                             py={0.5}
@@ -241,17 +245,17 @@ export const RecipeListPage = ({ recipes, onSelectRecipe }) => {
                                     </Text>
 
                                     <Box>
-                                        <Text fontWeight="semibold" mb={1}>
+                                        <Text fontWeight="semibold" mb={1} color={themeColors.pageText}>
                                             Cautions
                                         </Text>
                                         <Stack direction="row" wrap="wrap" spacing={2}>
                                             {(recipe.cautions?.length ? recipe.cautions : ['None']).map((caution) => (
                                                 <Badge
                                                     key={caution}
-                                                    bg="red.50"
-                                                    color="red.700"
+                                                    bg={themeColors.cautionBg}
+                                                    color={themeColors.cautionText}
                                                     border="1px solid"
-                                                    borderColor="red.200"
+                                                    borderColor={themeColors.cautionBorder}
                                                     cursor="pointer"
                                                     onClick={(event) => {
                                                         event.stopPropagation();
@@ -271,7 +275,7 @@ export const RecipeListPage = ({ recipes, onSelectRecipe }) => {
                     })
                 ) : (
                     <Box gridColumn="1 / -1" textAlign="center" py={10}>
-                        <Text fontSize="lg" color="gray.600">
+                        <Text fontSize="lg" color={themeColors.mutedText}>
                             No recipes match your search.
                         </Text>
                     </Box>
