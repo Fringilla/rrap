@@ -87,9 +87,6 @@ export const RecipeListPage = ({ recipes, onSelectRecipe }) => {
 
     return (
         <Box minH="100vh" px={{ base: 4, md: 8 }} py={8} bg={themeColors.pageBg}>
-            <Heading as="h1" size="lg" mb={4} textAlign="center" color={themeColors.heading}>
-                React Recipe App Project
-            </Heading>
 
             <Box maxW="540px" mx="auto" mb={4}>
                 <Input

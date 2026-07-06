@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
     Box,
     Button,
+    Heading,
 } from '@chakra-ui/react';
 import { RecipeListPage } from './pages/RecipeListPage';
 import { RecipePage } from './pages/RecipePage';
@@ -24,7 +25,21 @@ export const App = () => {
     return (
         <Box minH="100vh" bg={themeColors.pageBg}>
 
-            <Box display="flex" justifyContent="flex-end" px={4} pt={4}>
+            <Box
+                as="header"
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+                px={4}
+                pt={4}
+                pb={2}
+                maxW="1200px"
+                mx="auto"
+            >
+                <Heading as="h1" size="lg" color={themeColors.heading} m={0}>
+                    React Recipe App Project
+                </Heading>
+
                 <Button variant="outline" size="sm" onClick={() => setIsSettingsOpen(true)}>
                     Settings
                 </Button>
